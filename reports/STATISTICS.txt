@@ -1,0 +1,77 @@
+═══════════════════════════════════════════════════════════════
+STATISTICS REPORT
+═══════════════════════════════════════════════════════════════
+
+Clusters:
+- English: j-24CWAXFDE9MPS
+- Hebrew: j-Z9K0CX6USX3L
+
+═══════════════════════════════════════════════════════════════
+NUMBER OF KEY-VALUE PAIRS
+═══════════════════════════════════════════════════════════════
+
+WITH LOCAL AGGREGATION (Combiner):
+───────────────────────────────────────────────────────────────
+
+JOB 1 - English:
+  Map output records:      188,660,459
+  Combine output records:  2,867
+  Reduce input records:    2,867
+  → Reduction: 99.998%
+
+JOB 1 - Hebrew:
+  Map output records:      44,400,490
+  Combine output records:  495
+  Reduce input records:    495
+  → Reduction: 99.999%
+
+Analysis: The combiner aggregates word counts locally on each
+mapper before sending to reducers, achieving ~99.99% reduction
+in network traffic.
+
+
+WITHOUT LOCAL AGGREGATION (No Combiner):
+───────────────────────────────────────────────────────────────
+
+JOB 2 - English:
+  Map output records:      798,977,389
+  Reduce input records:    798,977,389
+  → No reduction (combiner not applicable for joins)
+
+JOB 2 - Hebrew:
+  Map output records:      159,586,657
+  Reduce input records:    159,586,657
+  → No reduction (combiner not applicable for joins)
+
+JOB 3 - English:
+  Map output records:      798,977,389
+  Reduce input records:    798,977,389
+  → No reduction (combiner not applicable for top-K selection)
+
+JOB 3 - Hebrew:
+  Map output records:      159,586,657
+  Reduce input records:    159,586,657
+  → No reduction (combiner not applicable for top-K selection)
+
+Analysis: Jobs 2 and 3 cannot use combiners because they require
+complete data at reducers (join operation and global top-100
+selection respectively).
+
+
+═══════════════════════════════════════════════════════════════
+SIZE OF KEY-VALUE PAIRS
+═══════════════════════════════════════════════════════════════
+
+English (eng-gb-all):
+  Job 1 output: 430 bytes (47 decade totals)
+  Job 2 output: ~20 GB (631,475,251 records)
+  Job 3 output: 235 KB (4,700 collocations)
+
+Hebrew (heb-all):
+  Job 1 output: 430 bytes (33 decade totals)
+  Job 2 output: 4.62 GB (115,557,585 records)
+  Job 3 output: 186 KB (3,300 collocations)
+
+Analysis: The largest intermediate data is Job 2 output, which
+contains all bigrams joined with their c1 counts after stopword
+filtering and validation.
