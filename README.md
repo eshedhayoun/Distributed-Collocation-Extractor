@@ -166,23 +166,6 @@ wc -l HEBREW-RESULTS.txt
 
 ---
 
-
-## OUTPUT LOCATIONS
-
-### S3 Output Directories (Final Results)
-
-**English Results (4,700 collocations):**
-
-Direct link: https://s3.console.aws.amazon.com/s3/buckets/dsp-ass2-idan-eshed/output/ENG-FINAL/final_result/
-
-**Hebrew Results (3,300 collocations):**
-
-Direct link: https://s3.console.aws.amazon.com/s3/buckets/dsp-ass2-idan-eshed/output/HEB-FIXED/final_result/
-
-**Note:** The output files are in S3. You can download them using the commands
-in the "Download Results Locally" section below, or access them directly via
-the AWS S3 console using the links above.
-
 ## CREATING REQUIRED REPORTS
 
 ### REPORT 1: Statistics (With/Without Local Aggregation)
